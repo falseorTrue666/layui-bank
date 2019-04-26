@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mr.bank.mapper.BankMapper">
+  <resultMap id="BaseResultMap" type="com.mr.bank.pojo.Bank">
+    <id column="bank_id" jdbcType="INTEGER" property="bankId" />
+    <result column="bank_no" jdbcType="VARCHAR" property="bankNo" />
+    <result column="bank_type" jdbcType="INTEGER" property="bankType" />
+    <result column="bank_belong" jdbcType="INTEGER" property="bankBelong" />
+    <result column="bank_name" jdbcType="VARCHAR" property="bankName" />
+    <result column="bank_money" jdbcType="DOUBLE" property="bankMoney" />
+    <result column="bank_date" jdbcType="DATE" property="bankDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    bank_id, bank_no, bank_type, bank_belong, bank_name, bank_money, bank_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_bank
+    where bank_id = #{bankId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_bank
+    where bank_id = #{bankId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mr.bank.pojo.Bank">
+    insert into t_bank (bank_id, bank_no, bank_type, 
+      bank_belong, bank_name, bank_money, 
+      bank_date)
+    values (#{bankId,jdbcType=INTEGER}, #{bankNo,jdbcType=VARCHAR}, #{bankType,jdbcType=INTEGER}, 
+      #{bankBelong,jdbcType=INTEGER}, #{bankName,jdbcType=VARCHAR}, #{bankMoney,jdbcType=DOUBLE}, 
+      #{bankDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mr.bank.pojo.Bank">
+    insert into t_bank
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bankId != null">
+        bank_id,
+      </if>
+      <if test="bankNo != null">
+        bank_no,
+      </if>
+      <if test="bankType != null">
+        bank_type,
+      </if>
+      <if test="bankBelong != null">
+        bank_belong,
+      </if>
+      <if test="bankName != null">
+        bank_name,
+      </if>
+      <if test="bankMoney != null">
+        bank_money,
+      </if>
+      <if test="bankDate != null">
+        bank_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bankId != null">
+        #{bankId,jdbcType=INTEGER},
+      </if>
+      <if test="bankNo != null">
+        #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankType != null">
+        #{bankType,jdbcType=INTEGER},
+      </if>
+      <if test="bankBelong != null">
+        #{bankBelong,jdbcType=INTEGER},
+      </if>
+      <if test="bankName != null">
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankMoney != null">
+        #{bankMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="bankDate != null">
+        #{bankDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mr.bank.pojo.Bank">
+    update t_bank
+    <set>
+      <if test="bankNo != null">
+        bank_no = #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankType != null">
+        bank_type = #{bankType,jdbcType=INTEGER},
+      </if>
+      <if test="bankBelong != null">
+        bank_belong = #{bankBelong,jdbcType=INTEGER},
+      </if>
+      <if test="bankName != null">
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankMoney != null">
+        bank_money = #{bankMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="bankDate != null">
+        bank_date = #{bankDate,jdbcType=DATE},
+      </if>
+    </set>
+    where bank_id = #{bankId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mr.bank.pojo.Bank">
+    update t_bank
+    set bank_no = #{bankNo,jdbcType=VARCHAR},
+      bank_type = #{bankType,jdbcType=INTEGER},
+      bank_belong = #{bankBelong,jdbcType=INTEGER},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      bank_money = #{bankMoney,jdbcType=DOUBLE},
+      bank_date = #{bankDate,jdbcType=DATE}
+    where bank_id = #{bankId,jdbcType=INTEGER}
+  </update>
+  <select id="queryBankList" resultType="bank">
+      select * from t_bank
+  </select>
+  <update id="updatebyBankNo">
+      update t_bank
+      set bank_money =  bank_money + #{bankMoney}
+      where bank_no = #{bankNo}
+  </update>
+  <update id="updateMoney">
+    update t_bank
+    set bank_money = #{bankMoney}
+    where bank_id = #{bankId}
+  </update>
+</mapper>
